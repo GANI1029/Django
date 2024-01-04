@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block start %}
+<div class="container my-4">
+
+    <form class="text-center mx-auto mb-1">
+        <div class="row">
+            <div class="col-md-3">
+                <input class="form-control" name="search" placeholder="Search">
+            </div>
+            <div class="col-md-1">
+                <button class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-light table-striped">
+        <thead class="table-info">
+            <tr>
+                <th scope="col">student_id</th>
+                <th scope="col">student_name</th>
+                <th scope="col">Department</th>
+                <th scope="col">student_email</th>
+                <th scope="col">student_age</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            {% for stu in page_obj %}
+            <tr>
+                <td>    <a href="/marks/{{ stu.student_id }}">{{ stu.student_id }}</a>      </td>
+                <td>{{ stu.student_name }}</td>
+                <td>{{ stu.department }}</td>
+                <td>{{ stu.student_email }}</td>
+                <td>{{ stu.student_age }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Django paginator buttons concept -->
+    <div class="pagination justify-content-center">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <!-- First page button -->
+                <a href="?page=1" class="btn btn-success">&laquo; first</a>
+                <!-- Previous page button -->
+                <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-primary">previous</a>
+            {% endif %}
+
+            <span class="current mx-2 fw-bold">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <!-- Next page button -->
+                <a href="?page={{ page_obj.next_page_number }}" class="btn btn-primary">next</a>
+                <!-- Last page button -->
+                <a href="?page={{ page_obj.paginator.num_pages }}" class="btn btn-danger">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+
+    
+</div>
+{% endblock %}

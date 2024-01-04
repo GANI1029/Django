@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block start %}
+
+<div class="container my-4">
+
+
+<div class="row">
+    <!-- Left-aligned content -->
+    <div class="col-6">
+
+        <h2>Student Details</h2>
+
+       <div class="text-start">
+        
+            {% if student_data %}
+           <p class="font-monospace fw-bolder">  Student ID: {{ student_data.student_id__student_id }}     </p>
+            <p class="font-monospace fw-bolder"> Student Name: {{ student_data.student_name }}     </p>
+            <p class="font-monospace fw-bolder">  Department: {{ student_data.department__department }}     </p>
+            <p class="font-monospace fw-bolder">  Student Age: {{ student_data.student_age }}     </p>
+            <p class="font-monospace fw-bolder">  Student Email: {{ student_data.student_email }}     </p>
+
+<!-- 
+                <h4><span class="badge text-bg-dark">Student Name: {{ student_data.student_name }}</span></h4>
+                <h4><span class="badge text-bg-dark"> Student Age: {{ student_data.student_age }}</span></h4>
+                <h4><span class="badge text-bg-dark">Department: {{ student_data.department__department }}</span></h4>
+                    <h4><span class="badge text-bg-dark"> Student Email: {{ student_data.student_email }}</span></h4>
+                        <h4><span class="badge text-bg-dark">  Student ID: {{ student_data.student_id__student_id }}</span></h4> -->
+
+        {% else %}
+            <p>No student details available.</p>
+        {% endif %}  
+        </div> 
+
+
+    </div>
+
+    <!-- Right-aligned content -->
+    <div class="col-6">
+        <div class="text-end">
+            <h4><span class="badge text-bg-dark">Rank: {{ query_set.first.student.studentreportcard.first.student_rank }}</span></h4>
+            <h4><span class="badge text-bg-dark">Total: {{ total_marks }}</span></h4>
+        </div>
+    </div>
+</div>
+</div>
+    
+</div>
+
+<div class="container mb-5">
+
+    <table class="table-info table-striped" style="background-color: #c2f1e6;">
+        <thead class="table-info">
+            <tr class="table-info">
+
+                <th scope="col">subject</th>
+                <th scope="col">marks</th>
+                <th scope="col">Pass/Fail</th>
+            </tr>
+        </thead>
+        <div> 
+
+        <tbody class="table">
+            {% for stu in query_set %}
+            <tr>
+                <td>{{ stu.subject }}</td>
+                <td>{{ stu.marks }}</td>
+                {% if stu.marks >= 35 %}
+                <td class="text-bg-success"> Pass </td>
+                {% else %}
+                <td class="text-bg-danger"> Fail </td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </div>
+    </table>
+    
+</div>
+
+
+
+
+{% endblock %}
